@@ -1,7 +1,10 @@
+require_relative 'time_handler'
+
 class App
   def call(env)
     request = Rack::Request.new(env)
-    response(200, request.inspect)
+    time_handler = TimeHandler.new(request.params)
+    response(200, time_handler.time)
   end
 
   private
