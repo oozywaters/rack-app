@@ -4,7 +4,11 @@ class App
   def call(env)
     request = Rack::Request.new(env)
     time_handler = TimeHandler.new(request.params)
-    response(200, time_handler.time)
+    if time_handler.unknown.empty?
+      response(200, time_handler.time)
+    else
+      response(400, "Unknown time format #{time_handler.unknown}")
+    end
   end
 
   private
